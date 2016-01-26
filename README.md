@@ -16,7 +16,8 @@ Installation
 In this directory, run:
 
 ```sh
-    sudo docker build -t numaengineering/gssf .
+    sudo docker build -t numaengineering/gssf-mesher-base gssf-mesher-base
+    sudo docker build -t numaengineering/gssf gssf
 ```
 
 Usage
