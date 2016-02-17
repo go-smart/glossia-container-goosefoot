@@ -34,7 +34,7 @@ RUN cmake /usr/local/src/gssf
 
 RUN make && make install
 
-ENV GSSA_CONTAINER_MODULE_COMMIT=5902770
+ENV GSSA_CONTAINER_MODULE_COMMIT=98a197c
 RUN pip3 install git+https://github.com/go-smart/gssa-container-module@$GSSA_CONTAINER_MODULE_COMMIT
 
 RUN mkdir -p /var/run/gssf /shared
