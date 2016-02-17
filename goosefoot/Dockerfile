@@ -1,4 +1,4 @@
-FROM numaengineering/gssf-mesher-base
+FROM gosmart/goosefoot-mesher-base
 
 ENV GSSF_ELMER_COMMIT 1d621de3933435210b05d30d0142bfbaac30cc47
 RUN cd /usr/src && git clone https://github.com/go-smart/gssf-elmer.git elmer && cd elmer && git checkout ${GSSF_ELMER_COMMIT}
@@ -25,19 +25,17 @@ RUN cmake /usr/local/src/elmer-libnuma -DCMAKE_INSTALL_PREFIX=${GSSF_ELMER_PREFI
 
 RUN make && make install
 
-ENV GSSA_CONTAINER_MODULE_COMMIT=d921981
-RUN pip3 install git+https://github.com/go-smart/gssa-container-module@$GSSA_CONTAINER_MODULE_COMMIT
-
-ENV GSSF_COMMIT=8884920
-RUN cd /usr/local/src && git clone https://github.com/go-smart/gssf.git gssf && cd gssf && git checkout ${GSSF_COMMIT}
-
-RUN mkdir -p /tmp/gssf-build
+# Remake GSSF to ensure Elmer is recognised
+RUN rm -rf /tmp/gssf-build && mkdir -p /tmp/gssf-build
 
 WORKDIR /tmp/gssf-build
 
 RUN cmake /usr/local/src/gssf
 
 RUN make && make install
+
+ENV GSSA_CONTAINER_MODULE_COMMIT=5902770
+RUN pip3 install git+https://github.com/go-smart/gssa-container-module@$GSSA_CONTAINER_MODULE_COMMIT
 
 RUN mkdir -p /var/run/gssf /shared
 

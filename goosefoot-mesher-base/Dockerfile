@@ -59,3 +59,16 @@ WORKDIR /tmp/mesher-cgal-build
 RUN cmake /usr/local/src/gssf-mesher-cgal
 
 RUN make && make install
+
+ENV LD_LIBRARY_PATH /usr/local/lib:/usr/lib:/lib
+
+ENV GSSF_COMMIT=83d21a5
+RUN cd /usr/local/src && git clone https://github.com/go-smart/gssf.git gssf && cd gssf && git checkout ${GSSF_COMMIT}
+
+RUN mkdir -p /tmp/gssf-build
+
+WORKDIR /tmp/gssf-build
+
+RUN cmake /usr/local/src/gssf
+
+RUN make && make install

@@ -16,4 +16,4 @@ fi
 mkdir -p output/run
 ln -s `pwd`/input output/run/input
 cd output/run
-exec "gosling" "--interpreter" "${INTERPRETER}" "--target" "settings.xml" "$@"
+exec "gosling" "--interpreter" "${INTERPRETER}" "--target" "settings.xml" "--final" "output/run/output" "$@"
