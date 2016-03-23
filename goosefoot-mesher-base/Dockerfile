@@ -49,20 +49,38 @@ RUN make
 
 RUN make install && ldconfig
 
-ENV GSSF_MESHER_CGAL_COMMIT=ea6eeda
-RUN cd /usr/local/src && git clone https://github.com/go-smart/gssf-mesher-cgal.git gssf-mesher-cgal && cd gssf-mesher-cgal && git checkout ${GSSF_MESHER_CGAL_COMMIT}
+#THIS SHOULD BE removed from APT line at top, once time is available for long OCC rebuild
+RUN apt-get remove -y libcgal-dev
+
+WORKDIR /usr/local/src
+
+ENV CGAL_RELEASE=CGAL-4.7
+RUN wget https://github.com/CGAL/cgal/releases/download/releases%2F$CGAL_RELEASE/$CGAL_RELEASE.tar.gz -O $CGAL_RELEASE.tar.gz
+
+RUN tar -xzf $CGAL_RELEASE.tar.gz
+
+RUN mkdir /tmp/CGAL-build
+
+WORKDIR /tmp/CGAL-build
+
+RUN cmake -DCMAKE_BUILD_TYPE=Release /usr/local/src/$CGAL_RELEASE
+
+RUN make && make install
+
+ENV GOOSEFOOT_MESHER_CGAL_COMMIT=c975446
+RUN cd /usr/local/src && git clone https://github.com/go-smart/goosefoot-mesher-cgal.git goosefoot-mesher-cgal && cd goosefoot-mesher-cgal && git checkout ${GOOSEFOOT_MESHER_CGAL_COMMIT}
 
 RUN mkdir -p /tmp/mesher-cgal-build
 
 WORKDIR /tmp/mesher-cgal-build
 
-RUN cmake /usr/local/src/gssf-mesher-cgal
+RUN cmake /usr/local/src/goosefoot-mesher-cgal
 
 RUN make && make install
 
 ENV LD_LIBRARY_PATH /usr/local/lib:/usr/lib:/lib
 
-ENV GSSF_COMMIT=83d21a5
+ENV GSSF_COMMIT=f4facbd
 RUN cd /usr/local/src && git clone https://github.com/go-smart/gssf.git gssf && cd gssf && git checkout ${GSSF_COMMIT}
 
 RUN mkdir -p /tmp/gssf-build

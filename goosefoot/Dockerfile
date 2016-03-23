@@ -14,7 +14,7 @@ RUN make
 
 RUN make install
 
-ENV GSSF_LIBNUMA_COMMIT 646a4ff
+ENV GSSF_LIBNUMA_COMMIT 334c3bb
 RUN cd /usr/local/src && git clone https://github.com/go-smart/gssf-elmer-modules.git elmer-libnuma && cd elmer-libnuma && git checkout ${GSSF_LIBNUMA_COMMIT}
 
 RUN mkdir -p /tmp/elmer-libnuma-build
@@ -34,7 +34,7 @@ RUN cmake /usr/local/src/gssf
 
 RUN make && make install
 
-ENV GSSA_CONTAINER_MODULE_COMMIT=1057132
+ENV GSSA_CONTAINER_MODULE_COMMIT=9da0a5f
 RUN pip3 install git+https://github.com/go-smart/gssa-container-module@$GSSA_CONTAINER_MODULE_COMMIT
 
 RUN mkdir -p /var/run/gssf /shared
