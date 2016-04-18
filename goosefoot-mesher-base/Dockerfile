@@ -67,7 +67,7 @@ RUN cmake -DCMAKE_BUILD_TYPE=Release /usr/local/src/$CGAL_RELEASE
 
 RUN make && make install
 
-ENV GOOSEFOOT_MESHER_CGAL_COMMIT=c975446
+ENV GOOSEFOOT_MESHER_CGAL_COMMIT=0695cfe
 RUN cd /usr/local/src && git clone https://github.com/go-smart/goosefoot-mesher-cgal.git goosefoot-mesher-cgal && cd goosefoot-mesher-cgal && git checkout ${GOOSEFOOT_MESHER_CGAL_COMMIT}
 
 RUN mkdir -p /tmp/mesher-cgal-build
@@ -80,7 +80,7 @@ RUN make && make install
 
 ENV LD_LIBRARY_PATH /usr/local/lib:/usr/lib:/lib
 
-ENV GSSF_COMMIT=f4facbd
+ENV GSSF_COMMIT=485957
 RUN cd /usr/local/src && git clone https://github.com/go-smart/gssf.git gssf && cd gssf && git checkout ${GSSF_COMMIT}
 
 RUN mkdir -p /tmp/gssf-build
